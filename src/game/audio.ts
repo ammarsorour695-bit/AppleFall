@@ -1,36 +1,69 @@
-let ctx: AudioContext | null = null;
+/*
+ * Sound effects sourced from freesound.org preview clips.
+ *
+ *  - "pop.ogg"      by birdOfTheNorth  — https://freesound.org/people/birdOfTheNorth/sounds/572540/  (CC0)
+ *  - "cha ching.wav" by creek23        — https://freesound.org/people/creek23/sounds/75235/          (CC BY-NC 4.0)
+ *  - "Levelup.wav"  by Seidhepriest    — https://freesound.org/people/Seidhepriest/sounds/382915/    (CC BY-NC 4.0)
+ *
+ * Variations (pitch, layering, trim) are derived at runtime.
+ */
+
+type Src = "pop" | "chaching" | "chime";
+
+const SOURCES: Record<Src, { url: string; vol: number }> = {
+  pop: { url: "https://cdn.freesound.org/previews/572/572540_12923717-hq.mp3", vol: 0.5 },
+  chaching: { url: "https://cdn.freesound.org/previews/75/75235_778044-hq.mp3", vol: 0.42 },
+  chime: { url: "https://cdn.freesound.org/previews/382/382915_736471-hq.mp3", vol: 0.34 },
+};
+
+const POOL_SIZE = 3;
+const pools: Partial<Record<Src, HTMLAudioElement[]>> = {};
+const cursors: Record<Src, number> = { pop: 0, chaching: 0, chime: 0 };
+const trims = new WeakMap<HTMLAudioElement, number>();
+
 let muted = false;
 
 export function setMuted(m: boolean) {
   muted = m;
 }
 
-function ac(): AudioContext | null {
-  if (muted) return null;
-  try {
-    if (!ctx) ctx = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
-    if (ctx.state === "suspended") void ctx.resume();
-    return ctx;
-  } catch {
-    return null;
+function getPool(src: Src): HTMLAudioElement[] {
+  let pool = pools[src];
+  if (!pool) {
+    pool = Array.from({ length: POOL_SIZE }, () => {
+      const el = new Audio(SOURCES[src].url);
+      el.preload = "auto";
+      el.addEventListener("timeupdate", () => {
+        const t = trims.get(el);
+        if (t !== undefined && el.currentTime >= t) {
+          el.pause();
+        }
+      });
+      return el;
+    });
+    pools[src] = pool;
   }
+  return pool;
 }
 
-function tone(freq: number, dur: number, type: OscillatorType, vol: number, when = 0, slideTo?: number) {
-  const c = ac();
-  if (!c) return;
-  const t0 = c.currentTime + when;
-  const osc = c.createOscillator();
-  const gain = c.createGain();
-  osc.type = type;
-  osc.frequency.setValueAtTime(freq, t0);
-  if (slideTo) osc.frequency.exponentialRampToValueAtTime(slideTo, t0 + dur);
-  gain.gain.setValueAtTime(0.0001, t0);
-  gain.gain.exponentialRampToValueAtTime(vol, t0 + 0.012);
-  gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-  osc.connect(gain).connect(c.destination);
-  osc.start(t0);
-  osc.stop(t0 + dur + 0.05);
+function play(src: Src, opts: { rate?: number; rand?: number; trim?: number; vol?: number } = {}) {
+  if (muted) return;
+  try {
+    const pool = getPool(src);
+    const el = pool[cursors[src] % POOL_SIZE];
+    cursors[src] = (cursors[src] + 1) % POOL_SIZE;
+    const { rate = 1, rand = 0, trim, vol } = opts;
+    el.volume = vol ?? SOURCES[src].vol;
+    el.playbackRate = Math.max(0.25, rate + (Math.random() * 2 - 1) * rand);
+    if (trim !== undefined) trims.set(el, trim);
+    else trims.delete(el);
+    el.currentTime = 0;
+    void el.play().catch(() => {
+      /* autoplay policy — ignore */
+    });
+  } catch {
+    /* audio unavailable — stay silent */
+  }
 }
 
 export type SfxKind = "click" | "buy" | "upgrade" | "gold" | "achieve" | "error" | "transplant";
@@ -38,36 +71,27 @@ export type SfxKind = "click" | "buy" | "upgrade" | "gold" | "achieve" | "error"
 export function playSfx(kind: SfxKind) {
   switch (kind) {
     case "click":
-      tone(520 + Math.random() * 160, 0.09, "triangle", 0.06, 0, 300);
+      play("pop", { rate: 0.95, rand: 0.2 });
       break;
     case "buy":
-      tone(392, 0.09, "square", 0.045);
-      tone(523, 0.12, "square", 0.045, 0.07);
+      play("chaching", { rate: 1, rand: 0.04 });
       break;
     case "upgrade":
-      tone(440, 0.08, "square", 0.045);
-      tone(554, 0.08, "square", 0.045, 0.06);
-      tone(659, 0.14, "square", 0.05, 0.12);
+      play("chime", { trim: 2.4, rate: 1.02 });
       break;
     case "gold":
-      tone(880, 0.1, "sine", 0.06);
-      tone(1174, 0.1, "sine", 0.06, 0.08);
-      tone(1568, 0.22, "sine", 0.06, 0.16);
+      play("chaching", { rate: 1.12, vol: 0.45 });
+      play("chime", { trim: 3, rate: 1.06, vol: 0.3 });
       break;
     case "achieve":
-      tone(523, 0.1, "triangle", 0.06);
-      tone(659, 0.1, "triangle", 0.06, 0.09);
-      tone(784, 0.1, "triangle", 0.06, 0.18);
-      tone(1046, 0.28, "triangle", 0.06, 0.27);
+      play("chime", { trim: 3.4, rate: 1 });
       break;
     case "error":
-      tone(180, 0.12, "sawtooth", 0.04, 0, 120);
+      play("pop", { rate: 0.45, rand: 0, vol: 0.42 });
       break;
     case "transplant":
-      tone(262, 0.3, "sine", 0.07);
-      tone(330, 0.3, "sine", 0.07, 0.14);
-      tone(392, 0.3, "sine", 0.07, 0.28);
-      tone(523, 0.55, "sine", 0.08, 0.42);
+      play("chime", { trim: 6, rate: 0.94, vol: 0.36 });
+      play("chaching", { rate: 0.9, vol: 0.3 });
       break;
   }
 }
