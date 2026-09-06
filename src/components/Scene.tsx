@@ -20,11 +20,6 @@ interface Fall {
   dur: number;
   size: number;
 }
-interface LeafBit {
-  id: number;
-  xPct: number;
-  dur: number;
-}
 interface Ring {
   id: number;
   x: number;
@@ -65,14 +60,17 @@ function PixelApple({ size }: { size: number }) {
   );
 }
 
-/* ---------------- the great apple tree (hand-built SVG) ---------------- */
+/* ---------------- the apple tree (simple hand-drawn style) ---------------- */
 
 const TREE_APPLES = [
-  { x: 112, y: 200, r: 12 }, { x: 148, y: 146, r: 13 }, { x: 186, y: 106, r: 12 },
-  { x: 226, y: 86, r: 13 }, { x: 266, y: 116, r: 12 }, { x: 300, y: 162, r: 13 },
-  { x: 130, y: 232, r: 11 }, { x: 172, y: 198, r: 12 }, { x: 212, y: 160, r: 13 },
-  { x: 252, y: 198, r: 12 }, { x: 288, y: 228, r: 11 }, { x: 206, y: 226, r: 11 },
-  { x: 164, y: 252, r: 10 }, { x: 248, y: 250, r: 10 },
+  { x: 132, y: 208, r: 12 },
+  { x: 168, y: 150, r: 12 },
+  { x: 206, y: 108, r: 12 },
+  { x: 244, y: 148, r: 12 },
+  { x: 276, y: 202, r: 12 },
+  { x: 158, y: 240, r: 11 },
+  { x: 248, y: 238, r: 11 },
+  { x: 205, y: 192, r: 12 },
 ];
 
 function TreeApple({ x, y, r, i }: { x: number; y: number; r: number; i: number }) {
@@ -87,149 +85,50 @@ function TreeApple({ x, y, r, i }: { x: number; y: number; r: number; i: number 
   );
 }
 
-function GreatTree() {
+function AppleTree() {
   return (
-    <svg viewBox="0 0 420 520" className="w-full h-full drop-shadow-[0_18px_28px_rgba(0,0,0,0.35)]">
-      <ellipse cx="210" cy="496" rx="158" ry="15" fill="rgba(6,20,14,0.45)" />
-      {/* roots */}
-      <path d="M 176 494 C 160 486 140 486 122 492 C 146 478 168 476 184 480 Z" fill="#5f3d1e" />
-      <path d="M 248 494 C 264 486 284 486 302 492 C 278 478 256 476 240 480 Z" fill="#5f3d1e" />
+    <svg viewBox="0 0 400 500" className="w-full h-full">
+      {/* ground shadow */}
+      <ellipse cx="205" cy="458" rx="130" ry="13" fill="rgba(0,0,0,0.15)" />
       {/* trunk */}
-      <path d="M 180 494 C 188 404 182 350 164 300 L 198 310 C 204 272 204 248 198 218 L 228 218 C 224 250 230 278 242 304 L 266 292 C 247 342 241 404 248 494 Z" fill="#6e4426" />
-      <path d="M 190 486 C 196 412 192 362 182 322 M 228 486 C 226 420 230 366 238 326 M 205 300 q 4 -30 2 -56" stroke="#533015" strokeWidth="5" fill="none" strokeLinecap="round" opacity="0.85" />
-      <path d="M 238 486 C 238 428 242 376 252 332" stroke="#8a5a2f" strokeWidth="3.5" fill="none" strokeLinecap="round" opacity="0.8" />
-      {/* knots (a sleepy face) */}
-      <ellipse cx="200" cy="392" rx="9" ry="12" fill="#4a2a12" />
-      <ellipse cx="200" cy="392" rx="5" ry="7" fill="#33200f" />
-      <ellipse cx="226" cy="412" rx="6" ry="8" fill="#4a2a12" />
-      <ellipse cx="226" cy="412" rx="3" ry="4.5" fill="#33200f" />
-      <path d="M 199 434 q 14 8 28 1" stroke="#4a2a12" strokeWidth="4" fill="none" strokeLinecap="round" />
+      <path
+        d="M 184 452 C 190 380 186 336 170 296 L 196 304 C 201 268 201 248 197 220 L 224 220 C 220 250 226 276 238 302 L 260 292 C 243 338 239 388 243 452 Z"
+        fill="#7a4a28"
+      />
+      <path d="M 191 444 C 196 386 193 348 184 314" stroke="#5f3a1e" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.7" />
+      <path d="M 234 444 C 232 392 236 352 244 320" stroke="#8f5c34" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.8" />
       {/* branches */}
-      <path d="M 198 244 L 152 198 M 226 240 L 274 196 M 212 228 L 210 176" stroke="#6e4426" strokeWidth="14" strokeLinecap="round" />
-      <path d="M 176 220 L 130 214 M 244 214 L 292 218" stroke="#6e4426" strokeWidth="9" strokeLinecap="round" />
+      <path d="M 198 238 L 150 196 M 222 236 L 270 192" stroke="#7a4a28" strokeWidth="13" strokeLinecap="round" />
       {/* canopy */}
-      <circle cx="210" cy="152" r="124" fill="#28602f" />
-      <circle cx="116" cy="198" r="82" fill="#28602f" />
-      <circle cx="304" cy="198" r="86" fill="#28602f" />
-      <circle cx="146" cy="108" r="74" fill="#28602f" />
-      <circle cx="274" cy="108" r="78" fill="#28602f" />
-      <circle cx="210" cy="142" r="104" fill="#3a8342" />
-      <circle cx="138" cy="180" r="68" fill="#3a8342" />
-      <circle cx="282" cy="180" r="70" fill="#3a8342" />
-      <circle cx="210" cy="92" r="64" fill="#3a8342" />
-      <circle cx="182" cy="122" r="58" fill="#55a84c" />
-      <circle cx="256" cy="136" r="52" fill="#55a84c" />
-      <circle cx="210" cy="74" r="42" fill="#55a84c" />
-      <circle cx="158" cy="98" r="27" fill="#6fc163" opacity="0.9" />
-      <circle cx="238" cy="86" r="21" fill="#6fc163" opacity="0.9" />
-      <circle cx="290" cy="152" r="19" fill="#6fc163" opacity="0.75" />
-      {/* sunset rim light on the sun side */}
-      <circle cx="318" cy="176" r="24" fill="#8cc565" opacity="0.85" />
-      <circle cx="298" cy="116" r="20" fill="#8cc565" opacity="0.8" />
-      <path d="M 352 128 A 124 124 0 0 1 366 238" stroke="#f6c66b" strokeWidth="7" fill="none" strokeLinecap="round" opacity="0.5" />
+      <circle cx="200" cy="168" r="100" fill="#4a9e3b" />
+      <circle cx="128" cy="208" r="62" fill="#4a9e3b" />
+      <circle cx="272" cy="206" r="64" fill="#4a9e3b" />
+      <circle cx="150" cy="116" r="58" fill="#4a9e3b" />
+      <circle cx="250" cy="114" r="60" fill="#4a9e3b" />
+      <circle cx="200" cy="150" r="82" fill="#5fb34d" />
+      <circle cx="140" cy="180" r="46" fill="#5fb34d" />
+      <circle cx="262" cy="178" r="48" fill="#5fb34d" />
+      <circle cx="200" cy="100" r="44" fill="#5fb34d" />
+      <circle cx="166" cy="132" r="26" fill="#74c563" opacity="0.9" />
+      <circle cx="232" cy="120" r="22" fill="#74c563" opacity="0.9" />
+      <circle cx="128" cy="238" r="30" fill="#3a7d2f" />
+      <circle cx="274" cy="236" r="32" fill="#3a7d2f" />
+      <circle cx="200" cy="246" r="40" fill="#3a7d2f" opacity="0.9" />
       {/* apples */}
       {TREE_APPLES.map((a, i) => (
         <TreeApple key={i} {...a} i={i} />
       ))}
-      {/* ladder leaning on the trunk */}
-      <g stroke="#8a5a2b" strokeWidth="5" strokeLinecap="round">
-        <line x1="120" y1="492" x2="178" y2="330" />
-        <line x1="146" y1="496" x2="202" y2="336" />
-        <line x1="130" y1="466" x2="154" y2="470" />
-        <line x1="141" y1="434" x2="164" y2="438" />
-        <line x1="152" y1="402" x2="174" y2="406" />
-        <line x1="162" y1="370" x2="183" y2="374" />
-        <line x1="172" y1="340" x2="192" y2="344" />
-      </g>
-      {/* rope swing */}
-      <g style={{ transformOrigin: "296px 214px", animation: "kf-swing 4.6s ease-in-out infinite" }}>
-        <line x1="288" y1="216" x2="284" y2="310" stroke="#c9a35f" strokeWidth="3.5" />
-        <line x1="306" y1="216" x2="302" y2="310" stroke="#c9a35f" strokeWidth="3.5" />
-        <rect x="276" y="308" width="34" height="8" rx="3" fill="#8a5a2b" />
-      </g>
-      {/* bird */}
-      <g style={{ animation: "kf-bob 2.6s ease-in-out infinite" }}>
-        <ellipse cx="130" cy="208" rx="13" ry="10" fill="#e85d4a" />
-        <circle cx="140" cy="200" r="6.5" fill="#e85d4a" />
-        <path d="M 146 200 l 7 2 l -7 3 Z" fill="#f2b03d" />
-        <circle cx="141.5" cy="198.5" r="1.4" fill="#2e2620" />
-        <path d="M 120 206 l -9 -4 l 3 8 Z" fill="#c94a38" />
-      </g>
-      {/* fallen apples at the base */}
-      <circle cx="168" cy="488" r="8" fill="#ff5347" />
-      <ellipse cx="165" cy="485" rx="2.4" ry="3.2" fill="#ff9c8f" />
-      <circle cx="262" cy="492" r="7" fill="#ff5347" />
-      <ellipse cx="259.5" cy="489.5" rx="2" ry="2.8" fill="#ff9c8f" />
-      <circle cx="250" cy="497" r="6" fill="#d9483f" />
     </svg>
   );
 }
 
-/* ---------------- scenery pieces ---------------- */
-
-function GrassTuft({ className, style }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <svg viewBox="0 0 30 24" className={`anim-grass ${className ?? ""}`} style={style}>
-      <path d="M4 24 Q5 10 2 2 Q9 8 9 24 Z" fill="#3f9a4a" />
-      <path d="M13 24 Q15 6 15 0 Q19 10 18 24 Z" fill="#57b45f" />
-      <path d="M23 24 Q24 12 28 5 Q27 16 26 24 Z" fill="#3f9a4a" />
-    </svg>
-  );
-}
-
-function Cloud({ top, scale, duration, delay, opacity }: { top: string; scale: number; duration: number; delay: number; opacity: number }) {
-  return (
-    <div className="absolute left-0 pointer-events-none" style={{ top, animation: `kf-drift ${duration}s linear ${delay}s infinite`, opacity }}>
-      <svg viewBox="0 0 200 70" style={{ width: 200 * scale }}>
-        <ellipse cx="60" cy="45" rx="55" ry="22" fill="#f9e3b3" />
-        <ellipse cx="110" cy="35" rx="48" ry="24" fill="#f9e3b3" />
-        <ellipse cx="150" cy="48" rx="42" ry="18" fill="#f9e3b3" />
-      </svg>
-    </div>
-  );
-}
-
-function MiniTree({ x, y, s, c }: { x: number; y: number; s: number; c: string }) {
-  return (
-    <g transform={`translate(${x} ${y}) scale(${s})`}>
-      <rect x="-2.5" y="0" width="5" height="16" fill="#0d241a" />
-      <circle cx="0" cy="-14" r="17" fill={c} />
-      <circle cx="-9" cy="-7" r="10" fill={c} />
-      <circle cx="9" cy="-7" r="10" fill={c} />
-    </g>
-  );
-}
-
-const FIREFLIES = Array.from({ length: 10 }, (_, i) => ({
-  left: (i * 37 + 13) % 100,
-  top: 48 + ((i * 53) % 44),
-  dur: 5.5 + (i % 4) * 1.4,
-  delay: -(i * 1.7),
-}));
-
-const STARS = Array.from({ length: 16 }, (_, i) => ({
-  left: (i * 61 + 7) % 100,
-  top: 3 + ((i * 29) % 30),
-  dur: 2.4 + (i % 3) * 1.2,
-  delay: -(i * 0.9),
-  s: i % 3 === 0 ? 3 : 2,
-}));
-
-const GRASS = Array.from({ length: 14 }, (_, i) => ({
-  left: (i * 71 + 4) % 100,
-  w: 22 + (i % 3) * 10,
-  delay: -(i * 0.6),
-  flip: i % 2 === 0,
-}));
-
-const PLAQUE = "rounded-xl border-[3px] border-[#7a5326] bg-gradient-to-b from-[#4a2f16] to-[#2e1b0b] shadow-[0_10px_25px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.14)]";
+const PLAQUE = "rounded-xl border-[3px] border-[#7a5326] bg-gradient-to-b from-[#4a2f16] to-[#2e1b0b] shadow-[0_10px_25px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.14)]";
 
 export function Scene({ game, onRequestReset }: { game: Game; onRequestReset: () => void }) {
   const { s, derived } = game;
   const sceneRef = useRef<HTMLDivElement>(null);
   const [pops, setPops] = useState<Pop[]>([]);
   const [falls, setFalls] = useState<Fall[]>([]);
-  const [leaves, setLeaves] = useState<LeafBit[]>([]);
   const [rings, setRings] = useState<Ring[]>([]);
   const [shaking, setShaking] = useState(false);
   const [bumpKey, setBumpKey] = useState(0);
@@ -246,7 +145,7 @@ export function Scene({ game, onRequestReset }: { game: Game; onRequestReset: ()
     const u = s.upgrades.length;
     const a = s.achievements.length;
     const p = prevCounts.current;
-    if (p.g === 0 && p.u === 0 && p.a === 0 && p.t === 0 && (g > 0 || u > 0 || a > 0 || s.transplants > 0)) {
+    if (p.g === 0 && p.u === 0 && p.a === 0 && p.t === 0 && (g > 0 || u > 0 || a > 0)) {
       /* first hydration tick after loading a save — no fanfare */
     } else {
       if (g > p.g) playSfx("buy");
@@ -257,7 +156,7 @@ export function Scene({ game, onRequestReset }: { game: Game; onRequestReset: ()
     prevCounts.current = { g, u, a, t: s.transplants };
   }, [s.owned, s.upgrades.length, s.achievements.length, s.transplants]);
 
-  /* ambient falling pixel-apples + leaves while producing */
+  /* ambient falling pixel-apples while producing */
   useEffect(() => {
     const id = window.setInterval(() => {
       if (document.hidden) return;
@@ -268,11 +167,6 @@ export function Scene({ game, onRequestReset }: { game: Game; onRequestReset: ()
           { id: fid, xPct: 40 + Math.random() * 20, yPct: 16 + Math.random() * 12, dx: (Math.random() - 0.5) * 90, dy: 900, rot: 120 + Math.random() * 200, dur: 1500 + Math.random() * 700, size: 22 + Math.random() * 10 },
         ]);
         window.setTimeout(() => setFalls((f) => f.filter((x) => x.id !== fid)), 2300);
-      }
-      if (Math.random() < 0.75) {
-        const lid = fxId++;
-        setLeaves((l) => [...l.slice(-4), { id: lid, xPct: 34 + Math.random() * 32, dur: 6500 + Math.random() * 3500 }]);
-        window.setTimeout(() => setLeaves((l) => l.filter((x) => x.id !== lid)), 10_500);
       }
     }, 2400);
     return () => window.clearInterval(id);
@@ -332,150 +226,44 @@ export function Scene({ game, onRequestReset }: { game: Game; onRequestReset: ()
   const showHint = s.totalClicks === 0;
 
   return (
-    <div ref={sceneRef} className="relative flex-1 min-h-0 overflow-hidden select-none" style={{ background: "linear-gradient(to bottom, #07181c 0%, #0e3128 30%, #1c5741 52%, #8fae5e 70%, #f2a94f 79%, #e2863f 84%, #3c8a46 84.4%, #2b6a37 92%, #1f4f2a 100%)" }}>
+    <div
+      ref={sceneRef}
+      className="relative flex-1 min-h-0 overflow-hidden select-none"
+      style={{ background: "linear-gradient(to bottom, #8ecdf5 0%, #b5e2fb 50%, #e2f4ff 73.8%, #6fb84d 74%, #57a43e 92%, #4c9436 100%)" }}
+    >
       <style>{`
         .px-frame-a { animation: kf-pxA 0.6s steps(1, end) infinite; }
         .px-frame-b { animation: kf-pxB 0.6s steps(1, end) infinite; }
         @keyframes kf-pxA { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
         @keyframes kf-pxB { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
         @keyframes kf-ring { 0% { transform: translate(-50%,-50%) scale(0.35); opacity: 0.9; } 100% { transform: translate(-50%,-50%) scale(2.4); opacity: 0; } }
-        @keyframes kf-swing { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
-        @keyframes kf-flicker { 0%, 100% { opacity: 0.9; } 40% { opacity: 0.6; } 55% { opacity: 1; } 72% { opacity: 0.7; } }
       `}</style>
 
-      {/* stars */}
-      {STARS.map((st, i) => (
-        <div key={i} className="absolute rounded-full bg-[#fff3cf] pointer-events-none" style={{ left: `${st.left}%`, top: `${st.top}%`, width: st.s, height: st.s, animation: `kf-twinkle ${st.dur}s ease-in-out ${st.delay}s infinite` }} />
-      ))}
-
-      {/* sun with rotating rays */}
-      <div className="absolute pointer-events-none" style={{ left: "66%", top: "62%" }}>
-        <svg viewBox="-110 -110 220 220" className="w-[340px] h-[340px] -translate-x-1/2 -translate-y-1/2">
-          <g className="anim-ray" opacity="0.5">
-            {Array.from({ length: 12 }, (_, i) => (
-              <line key={i} x1="0" y1="-52" x2="0" y2="-96" stroke="#ffd98a" strokeWidth="7" strokeLinecap="round" transform={`rotate(${i * 30})`} opacity="0.55" />
-            ))}
-          </g>
-          <circle r="46" fill="#ffd98a" opacity="0.9" />
-          <circle r="46" fill="url(#sunfade)" />
-          <defs>
-            <radialGradient id="sunfade">
-              <stop offset="0%" stopColor="#fff0c0" />
-              <stop offset="70%" stopColor="#ffd98a" stopOpacity="0.9" />
-              <stop offset="100%" stopColor="#f6b352" stopOpacity="0.4" />
-            </radialGradient>
-          </defs>
-        </svg>
-      </div>
-
-      {/* clouds */}
-      <Cloud top="6%" scale={1.3} duration={130} delay={-30} opacity={0.16} />
-      <Cloud top="15%" scale={0.9} duration={100} delay={-70} opacity={0.2} />
-      <Cloud top="25%" scale={1.1} duration={155} delay={-110} opacity={0.13} />
-
-      {/* hills + distant orchard rows + barn */}
-      <svg className="absolute bottom-[15%] left-0 w-full pointer-events-none" viewBox="0 0 1200 240" preserveAspectRatio="none" style={{ height: "36%" }}>
-        <path d="M0 240 L0 130 Q 200 40 420 120 Q 640 190 830 100 Q 1010 25 1200 110 L1200 240 Z" fill="#143726" />
-        <path d="M0 240 L0 185 Q 260 105 520 175 Q 780 245 1000 160 Q 1110 122 1200 150 L1200 240 Z" fill="#1b4534" />
-        {/* far orchard rows */}
-        <g opacity="0.9">
-          <MiniTree x={80} y={150} s={0.8} c="#0f2b1e" />
-          <MiniTree x={150} y={132} s={0.9} c="#0f2b1e" />
-          <MiniTree x={225} y={124} s={0.8} c="#0f2b1e" />
-          <MiniTree x={300} y={134} s={0.85} c="#0f2b1e" />
-          <MiniTree x={372} y={152} s={0.75} c="#0f2b1e" />
-          <MiniTree x={905} y={122} s={0.85} c="#0f2b1e" />
-          <MiniTree x={975} y={138} s={0.8} c="#0f2b1e" />
-          <MiniTree x={1045} y={152} s={0.9} c="#0f2b1e" />
-          <MiniTree x={1120} y={160} s={0.8} c="#0f2b1e" />
-        </g>
-        <g opacity="0.95">
-          <MiniTree x={110} y={206} s={1.15} c="#123222" />
-          <MiniTree x={205} y={196} s={1.2} c="#123222" />
-          <MiniTree x={300} y={196} s={1.1} c="#123222" />
-          <MiniTree x={395} y={204} s={1.15} c="#123222" />
-          <MiniTree x={760} y={222} s={1.2} c="#123222" />
-          <MiniTree x={860} y={208} s={1.1} c="#123222" />
-          <MiniTree x={1085} y={196} s={1.15} c="#123222" />
-        </g>
-        {/* barn with a lit window */}
-        <g>
-          <path d="M 560 205 L 560 165 L 600 142 L 640 165 L 640 205 Z" fill="#3d2417" />
-          <path d="M 552 168 L 600 138 L 648 168 L 640 168 L 600 146 L 560 168 Z" fill="#2a1810" />
-          <rect x="590" y="176" width="20" height="29" fill="#241407" />
-          <rect x="566" y="170" width="14" height="12" fill="#ffd98a" style={{ animation: "kf-flicker 3.4s ease-in-out infinite" }} />
-          <rect x="620" y="170" width="14" height="12" fill="#ffd98a" style={{ animation: "kf-flicker 4.1s ease-in-out 1.2s infinite" }} />
-        </g>
-      </svg>
-
-      {/* fence */}
-      <div className="absolute bottom-[13.5%] left-0 w-full pointer-events-none">
-        <svg viewBox="0 0 1200 70" preserveAspectRatio="none" className="w-full" style={{ height: 56 }}>
-          {Array.from({ length: 21 }, (_, i) => (
-            <g key={i}>
-              <rect x={i * 60 + 8} y="12" width="10" height="52" rx="3" fill="#5f3d1e" />
-              <path d={`M ${i * 60 + 8} 16 l 5 -9 l 5 9 Z`} fill="#77502a" />
-            </g>
-          ))}
-          <rect x="0" y="24" width="1200" height="7" fill="#472c14" />
-          <rect x="0" y="46" width="1200" height="7" fill="#472c14" />
-        </svg>
-      </div>
-
-      {/* bushes */}
-      <svg className="absolute bottom-[13%] right-[3%] w-44 pointer-events-none" viewBox="0 0 160 80">
-        <circle cx="40" cy="60" r="34" fill="#1b4534" />
-        <circle cx="90" cy="52" r="40" fill="#20523c" />
-        <circle cx="135" cy="64" r="30" fill="#1b4534" />
-        <circle cx="70" cy="44" r="5" fill="#ff5347" />
-        <circle cx="108" cy="38" r="5" fill="#ff5347" />
-        <circle cx="95" cy="62" r="5" fill="#ff5347" />
-      </svg>
-
-      {/* grass tufts */}
-      {GRASS.map((gt, i) => (
-        <GrassTuft key={i} className="absolute bottom-[12.2%] pointer-events-none" style={{ left: `${gt.left}%`, width: gt.w, animationDelay: `${gt.delay}s`, transform: gt.flip ? "scaleX(-1)" : undefined }} />
-      ))}
+      {/* subtle grass horizon line */}
+      <div className="absolute left-0 right-0 pointer-events-none" style={{ top: "74%", height: 3, background: "rgba(255,255,255,0.28)" }} />
 
       {/* THE TREE */}
-      <div className="absolute inset-x-0 bottom-[11%] flex justify-center pointer-events-none">
+      <div className="absolute inset-x-0 bottom-[8%] flex justify-center pointer-events-none">
         <div
           className={`pointer-events-auto relative cursor-pointer transition-transform duration-100 active:scale-[0.985] ${shaking ? "anim-shake" : ""}`}
-          style={{ height: "min(66vh, 560px)", width: "min(66vh, 560px)", touchAction: "manipulation" }}
+          style={{ height: "min(64vh, 540px)", width: "min(64vh, 540px)", touchAction: "manipulation" }}
           onPointerDown={onTreeDown}
           role="button"
           aria-label="Shake the apple tree"
         >
           <div className="anim-sway w-full h-full">
-            <GreatTree />
+            <AppleTree />
           </div>
           {showHint && (
             <div className="absolute -right-6 top-8 sm:right-[-90px] anim-bob pointer-events-none">
-              <div className="bg-gold text-bark-900 font-display text-lg px-4 py-2 rounded-xl shadow-lg rotate-6 whitespace-nowrap">
+              <div className="bg-gold text-bark-900 font-display text-lg px-4 py-2 rounded-xl shadow-lg rotate-6 whitespace-nowrap border-2 border-gold-dark">
                 Shake the tree!
-                <span className="absolute -bottom-2 left-6 w-4 h-4 bg-gold rotate-45" />
+                <span className="absolute -bottom-2 left-6 w-4 h-4 bg-gold rotate-45 border-b-2 border-r-2 border-gold-dark" />
               </div>
             </div>
           )}
         </div>
       </div>
-
-      {/* fireflies */}
-      {FIREFLIES.map((f, i) => (
-        <div key={i} className="absolute pointer-events-none" style={{ left: `${f.left}%`, top: `${f.top}%` }}>
-          <div className="w-[5px] h-[5px] rounded-full bg-[#ffe9ad]" style={{ boxShadow: "0 0 10px 3px rgba(255,233,173,0.7)", animation: `kf-firefly ${f.dur}s ease-in-out ${f.delay}s infinite` }} />
-        </div>
-      ))}
-
-      {/* ambient leaves */}
-      {leaves.map((l) => (
-        <div key={l.id} className="absolute pointer-events-none" style={{ left: `${l.xPct}%`, top: "12%", animation: `kf-leaf ${l.dur}ms ease-in forwards` }}>
-          <svg viewBox="0 0 24 24" className="w-5 h-5">
-            <path d="M20 3 Q22 14 12 19 Q4 15 4 8 Q4 4 20 3 Z" fill="#6cc24a" />
-            <path d="M6 16 Q11 10 18 5" stroke="#3f7f3a" strokeWidth="1.4" fill="none" />
-          </svg>
-        </div>
-      ))}
 
       {/* falling pixel-apples */}
       {falls.map((f) => (
@@ -486,12 +274,12 @@ export function Scene({ game, onRequestReset }: { game: Game; onRequestReset: ()
 
       {/* click ripples */}
       {rings.map((r) => (
-        <span key={r.id} className="absolute w-16 h-16 rounded-full border-[3px] border-[#ffd9d2] pointer-events-none z-20" style={{ left: r.x, top: r.y, animation: "kf-ring 0.5s ease-out forwards" }} />
+        <span key={r.id} className="absolute w-16 h-16 rounded-full border-[3px] border-[#ff5347] pointer-events-none z-20" style={{ left: r.x, top: r.y, animation: "kf-ring 0.5s ease-out forwards" }} />
       ))}
 
       {/* click pops */}
       {pops.map((p) => (
-        <div key={p.id} className="absolute pointer-events-none font-display text-2xl text-cream text-outline-sm z-20" style={{ left: p.x, top: p.y - 14, animation: "kf-pop 0.95s ease-out forwards" }}>
+        <div key={p.id} className="absolute pointer-events-none font-display text-2xl text-cream z-20" style={{ left: p.x, top: p.y - 14, animation: "kf-pop 0.95s ease-out forwards", textShadow: "0 2px 0 rgba(0,0,0,0.45), 0 0 10px rgba(0,0,0,0.25)" }}>
           {p.text}
         </div>
       ))}
@@ -517,17 +305,14 @@ export function Scene({ game, onRequestReset }: { game: Game; onRequestReset: ()
       )}
 
       {/* frenzy / surge tints */}
-      {frenzy && <div className="absolute inset-0 pointer-events-none z-10" style={{ background: "radial-gradient(circle at 50% 42%, rgba(255,201,77,0.22), transparent 62%)", animation: "kf-frenzy 1.1s ease-in-out infinite" }} />}
+      {frenzy && <div className="absolute inset-0 pointer-events-none z-10" style={{ background: "radial-gradient(circle at 50% 42%, rgba(255,201,77,0.28), transparent 62%)", animation: "kf-frenzy 1.1s ease-in-out infinite" }} />}
       {surge && <div className="absolute inset-0 pointer-events-none z-10" style={{ boxShadow: "inset 0 0 120px rgba(255,83,71,0.35)" }} />}
-
-      {/* vignette */}
-      <div className="absolute inset-0 pointer-events-none z-10" style={{ background: "radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(4,13,10,0.45) 100%)" }} />
 
       {/* ---------- HUD ---------- */}
       <div className="absolute top-3 left-3 sm:top-5 sm:left-5 z-30 pointer-events-none">
         <div className="flex items-center gap-2 mb-2">
-          <span className="text-leaf"><Icon name="leaf" className="w-5 h-5" /></span>
-          <span className="font-display tracking-[0.22em] text-[13px] text-[#a8d18a] text-outline-sm">APPLEFALL</span>
+          <span className="text-[#1c6b36]"><Icon name="leaf" className="w-5 h-5" /></span>
+          <span className="font-display tracking-[0.22em] text-[13px] text-[#1c5b34]" style={{ textShadow: "0 1px 0 rgba(255,255,255,0.45)" }}>APPLEFALL</span>
         </div>
         <div className={`${PLAQUE} relative px-4 py-3`}>
           <span className="absolute top-1.5 left-1.5 w-2 h-2 rounded-full bg-[#1d1006] ring-1 ring-[#6b4a26]" />
@@ -578,7 +363,7 @@ export function Scene({ game, onRequestReset }: { game: Game; onRequestReset: ()
 
       {/* controls */}
       <div className="absolute top-3 right-3 sm:top-5 sm:right-5 z-30 flex items-start gap-2">
-        {saveFlash && <span className="mt-2 text-leaf font-bold text-xs bg-pine-950/80 border border-leaf/40 rounded-full px-2.5 py-1">Saved</span>}
+        {saveFlash && <span className="mt-2 text-[#1c5b34] font-bold text-xs bg-white/70 border border-[#1c5b34]/40 rounded-full px-2.5 py-1">Saved</span>}
         <button onClick={game.toggleMute} className="w-10 h-10 rounded-full bg-bark-800/90 border-2 border-bark-600 flex items-center justify-center hover:border-gold/60 hover:-translate-y-0.5 transition-all shadow-lg" title={s.muted ? "Unmute" : "Mute"}>
           <Icon name={s.muted ? "mute" : "sound"} className="w-5 h-5" />
         </button>
