@@ -60,25 +60,28 @@ function PixelApple({ size }: { size: number }) {
   );
 }
 
-/* ---------------- the apple tree (simple hand-drawn style) ---------------- */
+/* ---------------- the apple tree (storybook style) ---------------- */
 
 const TREE_APPLES = [
-  { x: 132, y: 208, r: 12 },
-  { x: 168, y: 150, r: 12 },
-  { x: 206, y: 108, r: 12 },
-  { x: 244, y: 148, r: 12 },
-  { x: 276, y: 202, r: 12 },
-  { x: 158, y: 240, r: 11 },
-  { x: 248, y: 238, r: 11 },
-  { x: 205, y: 192, r: 12 },
+  { x: 120, y: 206, r: 12 },
+  { x: 156, y: 148, r: 12 },
+  { x: 202, y: 104, r: 12 },
+  { x: 248, y: 140, r: 13 },
+  { x: 284, y: 198, r: 12 },
+  { x: 168, y: 226, r: 11 },
+  { x: 234, y: 224, r: 11 },
+  { x: 204, y: 174, r: 13 },
+  { x: 150, y: 96, r: 11 },
+  { x: 254, y: 88, r: 11 },
 ];
 
 function TreeApple({ x, y, r, i }: { x: number; y: number; r: number; i: number }) {
   return (
     <g style={{ animation: `kf-bob ${3.2 + (i % 4) * 0.7}s ease-in-out ${-(i * 0.55)}s infinite` }}>
+      <ellipse cx={x} cy={y + r * 0.55} rx={r * 0.6} ry={r * 0.32} fill="#d92f2b" opacity={0.45} />
       <circle cx={x} cy={y} r={r} fill="#ff5347" />
       <circle cx={x} cy={y} r={r} fill="none" stroke="#d92f2b" strokeWidth={1.4} opacity={0.7} />
-      <ellipse cx={x - r * 0.35} cy={y - r * 0.32} rx={r * 0.26} ry={r * 0.36} fill="#ff9c8f" opacity={0.85} transform={`rotate(-22 ${x - r * 0.35} ${y - r * 0.32})`} />
+      <ellipse cx={x - r * 0.35} cy={y - r * 0.32} rx={r * 0.26} ry={r * 0.36} fill="#ff9c8f" opacity={0.9} transform={`rotate(-22 ${x - r * 0.35} ${y - r * 0.32})`} />
       <path d={`M ${x} ${y - r + 2} q ${r * 0.14} ${-r * 0.5} ${r * 0.45} ${-r * 0.62}`} stroke="#6b4226" strokeWidth={2} fill="none" strokeLinecap="round" />
       <ellipse cx={x + r * 0.55} cy={y - r * 1.28} rx={r * 0.4} ry={r * 0.19} fill="#63b453" transform={`rotate(-24 ${x + r * 0.55} ${y - r * 1.28})`} />
     </g>
@@ -87,37 +90,79 @@ function TreeApple({ x, y, r, i }: { x: number; y: number; r: number; i: number 
 
 function AppleTree() {
   return (
-    <svg viewBox="0 0 400 500" className="w-full h-full">
+    <svg viewBox="0 0 400 500" className="w-full h-full drop-shadow-[0_10px_20px_rgba(20,60,20,0.18)]">
+      <defs>
+        {/* canopy silhouette: a union of puffs, reused for fill and clipping */}
+        <g id="canopyShape">
+          <circle cx="200" cy="164" r="98" />
+          <circle cx="120" cy="204" r="60" />
+          <circle cx="280" cy="202" r="62" />
+          <circle cx="140" cy="112" r="55" />
+          <circle cx="258" cy="110" r="58" />
+          <circle cx="200" cy="84" r="52" />
+        </g>
+        <clipPath id="canopyClip">
+          <use href="#canopyShape" />
+        </clipPath>
+      </defs>
+
       {/* ground shadow */}
-      <ellipse cx="205" cy="458" rx="130" ry="13" fill="rgba(0,0,0,0.15)" />
-      {/* trunk */}
-      <path
-        d="M 184 452 C 190 380 186 336 170 296 L 196 304 C 201 268 201 248 197 220 L 224 220 C 220 250 226 276 238 302 L 260 292 C 243 338 239 388 243 452 Z"
-        fill="#7a4a28"
-      />
-      <path d="M 191 444 C 196 386 193 348 184 314" stroke="#5f3a1e" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.7" />
-      <path d="M 234 444 C 232 392 236 352 244 320" stroke="#8f5c34" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.8" />
-      {/* branches */}
-      <path d="M 198 238 L 150 196 M 222 236 L 270 192" stroke="#7a4a28" strokeWidth="13" strokeLinecap="round" />
-      {/* canopy */}
-      <circle cx="200" cy="168" r="100" fill="#4a9e3b" />
-      <circle cx="128" cy="208" r="62" fill="#4a9e3b" />
-      <circle cx="272" cy="206" r="64" fill="#4a9e3b" />
-      <circle cx="150" cy="116" r="58" fill="#4a9e3b" />
-      <circle cx="250" cy="114" r="60" fill="#4a9e3b" />
-      <circle cx="200" cy="150" r="82" fill="#5fb34d" />
-      <circle cx="140" cy="180" r="46" fill="#5fb34d" />
-      <circle cx="262" cy="178" r="48" fill="#5fb34d" />
-      <circle cx="200" cy="100" r="44" fill="#5fb34d" />
-      <circle cx="166" cy="132" r="26" fill="#74c563" opacity="0.9" />
-      <circle cx="232" cy="120" r="22" fill="#74c563" opacity="0.9" />
-      <circle cx="128" cy="238" r="30" fill="#3a7d2f" />
-      <circle cx="274" cy="236" r="32" fill="#3a7d2f" />
-      <circle cx="200" cy="246" r="40" fill="#3a7d2f" opacity="0.9" />
+      <ellipse cx="202" cy="458" rx="138" ry="13" fill="rgba(0,0,0,0.16)" />
+
+      {/* trunk with root flares */}
+      <path d="M 176 454 C 183 402 182 358 170 320 L 148 300 L 176 306 C 181 274 182 252 179 234 L 221 234 C 218 254 220 276 226 306 L 254 300 L 232 320 C 220 358 219 402 226 454 C 210 448 190 448 176 454 Z" fill="#7a4a28" />
+      <path d="M 178 452 Q 158 444 140 452 Q 158 457 178 454 Z" fill="#7a4a28" />
+      <path d="M 224 452 Q 244 444 262 452 Q 244 457 224 454 Z" fill="#7a4a28" />
+      {/* bark lines + knot */}
+      <path d="M 190 446 C 195 390 193 350 184 316" stroke="#5f3a1e" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.75" />
+      <path d="M 230 446 C 228 394 232 354 240 322" stroke="#8f5c34" strokeWidth="3.5" fill="none" strokeLinecap="round" opacity="0.85" />
+      <path d="M 200 288 q 2 -24 0 -44" stroke="#5f3a1e" strokeWidth="3.5" fill="none" strokeLinecap="round" opacity="0.6" />
+      <ellipse cx="212" cy="398" rx="7" ry="10" fill="#5f3a1e" />
+      <ellipse cx="212" cy="398" rx="3.5" ry="5.5" fill="#4a2c14" />
+
+      {/* branches (tucked under the canopy) */}
+      <path d="M 190 300 C 174 266 156 242 128 222" stroke="#7a4a28" strokeWidth="14" fill="none" strokeLinecap="round" />
+      <path d="M 226 296 C 242 260 262 236 290 218" stroke="#7a4a28" strokeWidth="14" fill="none" strokeLinecap="round" />
+      <path d="M 204 260 C 202 236 202 216 202 198" stroke="#7a4a28" strokeWidth="11" fill="none" strokeLinecap="round" />
+
+      {/* little bird on the left branch */}
+      <g style={{ animation: "kf-bob 2.8s ease-in-out infinite" }}>
+        <path d="M 150 254 l -10 -5 l 4 9 Z" fill="#c94a38" />
+        <ellipse cx="162" cy="252" rx="13" ry="10" fill="#e85d4a" />
+        <circle cx="172" cy="244" r="6.5" fill="#e85d4a" />
+        <path d="M 178 244 l 7 2 l -7 3 Z" fill="#f2b03d" />
+        <circle cx="173.5" cy="242.5" r="1.4" fill="#2e2620" />
+        <path d="M 158 250 q 5 4 10 1" stroke="#c94a38" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+      </g>
+
+      {/* canopy: base tone, then light from the top-left, then clipped bottom shading */}
+      <use href="#canopyShape" fill="#4aa53f" />
+      <g clipPath="url(#canopyClip)">
+        <circle cx="192" cy="156" r="84" fill="#62ba52" />
+        <circle cx="134" cy="196" r="46" fill="#62ba52" />
+        <circle cx="266" cy="192" r="46" fill="#62ba52" />
+        <circle cx="150" cy="108" r="42" fill="#62ba52" />
+        <circle cx="248" cy="106" r="44" fill="#62ba52" />
+        <circle cx="174" cy="94" r="30" fill="#82d46d" />
+        <circle cx="134" cy="140" r="22" fill="#82d46d" opacity="0.9" />
+        <circle cx="230" cy="88" r="18" fill="#82d46d" opacity="0.9" />
+        {/* shade hugging the bottom inside edge */}
+        <ellipse cx="200" cy="246" rx="88" ry="30" fill="#397c31" opacity="0.65" />
+        <ellipse cx="128" cy="224" rx="42" ry="24" fill="#397c31" opacity="0.55" />
+        <ellipse cx="276" cy="222" rx="44" ry="24" fill="#397c31" opacity="0.55" />
+      </g>
+
       {/* apples */}
       {TREE_APPLES.map((a, i) => (
         <TreeApple key={i} {...a} i={i} />
       ))}
+
+      {/* fallen apples at the base */}
+      <circle cx="166" cy="460" r="8" fill="#ff5347" />
+      <ellipse cx="163.5" cy="457" rx="2.4" ry="3.2" fill="#ff9c8f" />
+      <circle cx="244" cy="463" r="7" fill="#ff5347" />
+      <ellipse cx="241.8" cy="460.5" rx="2" ry="2.8" fill="#ff9c8f" />
+      <circle cx="230" cy="468" r="6" fill="#e04a3f" />
     </svg>
   );
 }
