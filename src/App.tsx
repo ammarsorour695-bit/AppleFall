@@ -30,7 +30,7 @@ export default function App() {
         <Modal onClose={game.clearOfflineInfo}>
           <div className="flex items-center gap-3">
             <span className="anim-bob inline-block">
-              <Icon name="basket" className="w-12 h-12" />
+              <Icon name="basket" className="w-12 h-12 text-gold" />
             </span>
             <div>
               <h3 className="font-display text-2xl text-gold leading-none">Welcome back!</h3>
@@ -40,7 +40,7 @@ export default function App() {
           <p className="mt-4 text-sm font-semibold text-cream-dim">Your helpers kept working while you were gone (at half pace). They harvested:</p>
           <div className="mt-3 rounded-xl bg-pine-900 border-2 border-leaf/40 py-4 text-center">
             <div className="flex items-center justify-center gap-2 font-display text-3xl text-leaf">
-              <Icon name="apple" className="w-7 h-7" /> +{formatNumber(game.offlineInfo.gain)}
+              <Icon name="apple" className="w-7 h-7 text-apple" /> +{formatNumber(game.offlineInfo.gain)}
             </div>
           </div>
           <div className="mt-5">
@@ -56,7 +56,7 @@ export default function App() {
         <Modal onClose={() => setModal(null)}>
           <div className="flex items-center gap-3">
             <span className="anim-wiggle inline-block">
-              <Icon name="seed" className="w-12 h-12" />
+              <Icon name="seed" className="w-12 h-12 text-gold" />
             </span>
             <div>
               <h3 className="font-display text-2xl gold-shimmer leading-tight">Transplant the Grove?</h3>
@@ -77,7 +77,7 @@ export default function App() {
       {modal === "reset" && (
         <Modal onClose={() => setModal(null)}>
           <div className="flex items-center gap-3">
-            <Icon name="reset" className="w-10 h-10" />
+            <Icon name="reset" className="w-10 h-10 text-apple" />
             <div>
               <h3 className="font-display text-2xl text-apple leading-tight">Burn the orchard down?</h3>
               <p className="text-xs font-bold text-cream-dim/80 mt-0.5">This erases EVERYTHING — progress, seeds, awards.</p>

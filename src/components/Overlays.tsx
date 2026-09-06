@@ -14,7 +14,7 @@ export function Toasts({ toasts }: { toasts: Toast[] }) {
           style={{ animation: "kf-toast-in 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) both" }}
         >
           <span className={t.kind === "achieve" ? "anim-wiggle" : ""}>
-            <Icon name={t.kind === "achieve" ? "medal" : t.kind === "gold" ? "goldapple" : "sparkle"} className="w-8 h-8 shrink-0" />
+            <Icon name={t.kind === "achieve" ? "medal" : t.kind === "gold" ? "goldapple" : "sparkle"} className={`w-8 h-8 shrink-0 ${t.kind === "info" ? "text-leaf" : "text-gold"}`} />
           </span>
           <div className="min-w-0">
             <div className={`font-display text-[15px] leading-tight ${t.kind === "gold" ? "text-gold" : t.kind === "achieve" ? "text-leaf" : "text-cream"}`}>{t.title}</div>

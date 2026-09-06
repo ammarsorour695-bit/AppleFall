@@ -115,7 +115,7 @@ export function Shop({ game, onTransplantRequest }: { game: Game; onTransplantRe
                       <div className="text-xs text-cream-dim/60 font-semibold">Keep harvesting to discover…</div>
                     </div>
                     <div className="ml-auto font-display text-sm text-cream-dim/50 whitespace-nowrap flex items-center gap-1">
-                      <Icon name="apple" className="w-4 h-4 opacity-60" /> {formatNumber(gen.baseCost)}
+                      <Icon name="apple" className="w-4 h-4 text-apple/70" /> {formatNumber(gen.baseCost)}
                     </div>
                   </div>
                 );
@@ -130,7 +130,7 @@ export function Shop({ game, onTransplantRequest }: { game: Game; onTransplantRe
                     affordable ? "bg-bark-700 border-bark-500 hover:border-gold/70 hover:-translate-y-[2px] hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)] active:translate-y-0" : "bg-bark-800 border-bark-700 opacity-80"
                   }`}
                 >
-                  <div className={`w-12 h-12 shrink-0 rounded-lg bg-pine-800 ring-1 ring-bark-600 flex items-center justify-center transition-transform ${affordable ? "group-hover:scale-110 group-hover:-rotate-3" : "grayscale opacity-70"}`}>
+                  <div className={`w-12 h-12 shrink-0 rounded-lg bg-pine-800 ring-1 ring-bark-600 flex items-center justify-center transition-transform ${affordable ? "text-gold group-hover:scale-110 group-hover:-rotate-3" : "text-cream-dim/40 opacity-70"}`}>
                     <Icon name={gen.icon} className="w-9 h-9" />
                   </div>
                   <div className="min-w-0 flex-1">
@@ -167,7 +167,7 @@ export function Shop({ game, onTransplantRequest }: { game: Game; onTransplantRe
                 className="w-full rounded-xl border-2 border-gold/60 bg-gradient-to-b from-bark-600 to-bark-700 p-3 text-left hover:-translate-y-0.5 hover:border-gold transition-all shadow-[0_4px_18px_rgba(255,201,77,0.15)]"
               >
                 <div className="flex items-center gap-2.5">
-                  <span className="anim-wiggle"><Icon name="seed" className="w-9 h-9" /></span>
+                  <span className="anim-wiggle text-gold"><Icon name="seed" className="w-9 h-9" /></span>
                   <div>
                     <div className="font-display text-lg gold-shimmer leading-tight">Transplant the Grove</div>
                     <div className="text-[11px] font-bold text-cream-dim">Reset for <span className="text-gold">+{seeds} Golden Seed{seeds > 1 ? "s" : ""}</span> · +{seeds * 10}% production forever</div>
@@ -177,7 +177,7 @@ export function Shop({ game, onTransplantRequest }: { game: Game; onTransplantRe
             ) : (
               <div className="rounded-xl border-2 border-bark-600 bg-bark-700/50 p-3">
                 <div className="flex items-center gap-2.5">
-                  <Icon name="seed" className="w-8 h-8 opacity-50 grayscale" />
+                  <Icon name="seed" className="w-8 h-8 text-cream-dim opacity-40" />
                   <div className="flex-1">
                     <div className="font-display text-[15px] text-cream-dim leading-tight">Golden Seeds</div>
                     <div className="text-[11px] font-bold text-cream-dim/60">Harvest {formatNumber(PRESTIGE_BASE)} apples this run to unlock transplanting</div>
@@ -202,7 +202,7 @@ export function Shop({ game, onTransplantRequest }: { game: Game; onTransplantRe
               <>
                 <div className="flex items-center gap-3">
                   <div className="w-14 h-14 rounded-lg bg-pine-800 ring-1 ring-bark-600 flex items-center justify-center shrink-0">
-                    <Icon name={selected.icon} className="w-10 h-10" />
+                    <Icon name={selected.icon} className="w-10 h-10 text-gold" />
                   </div>
                   <div className="min-w-0">
                     <div className="font-display text-lg text-cream leading-tight">{selected.name}</div>
@@ -256,7 +256,7 @@ export function Shop({ game, onTransplantRequest }: { game: Game; onTransplantRe
                     isSel ? "border-gold bg-bark-600 scale-105 shadow-lg" : can ? "border-bark-500 bg-bark-700 hover:border-gold/60 hover:-translate-y-0.5" : "border-bark-700 bg-bark-800 opacity-60 grayscale hover:opacity-90"
                   }`}
                 >
-                  <Icon name={up.icon} className="w-8 h-8" />
+                  <Icon name={up.icon} className={`w-8 h-8 ${can ? "text-gold" : "text-cream-dim/40"}`} />
                   {can && !isSel && <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-gold border-2 border-bark-900" />}
                 </button>
               );
@@ -273,7 +273,7 @@ export function Shop({ game, onTransplantRequest }: { game: Game; onTransplantRe
                   if (!up) return null;
                   return (
                     <div key={id} title={up.name} className="w-9 h-9 rounded-md bg-pine-800 ring-1 ring-leaf/30 flex items-center justify-center opacity-90">
-                      <Icon name={up.icon} className="w-6 h-6" />
+                      <Icon name={up.icon} className="w-6 h-6 text-leaf" />
                     </div>
                   );
                 })}
@@ -288,7 +288,7 @@ export function Shop({ game, onTransplantRequest }: { game: Game; onTransplantRe
         <div className="flex-1 overflow-y-auto shop-scroll min-h-0 p-4">
           <div className="flex items-center justify-between">
             <div className="font-display text-lg text-cream flex items-center gap-2">
-              <Icon name="medal" className="w-6 h-6" />
+              <Icon name="medal" className="w-6 h-6 text-gold" />
               {s.achievements.length}/{ACHIEVEMENTS.length}
             </div>
             <span className="text-[11px] font-black uppercase tracking-wider text-leaf bg-leaf/10 border border-leaf/30 rounded-full px-2.5 py-1">
@@ -324,7 +324,7 @@ export function Shop({ game, onTransplantRequest }: { game: Game; onTransplantRe
           {/* stats */}
           <div className="mt-5 rounded-xl border-2 border-bark-600 bg-bark-800 p-3.5">
             <div className="font-display text-[15px] text-gold flex items-center gap-2 mb-2">
-              <Icon name="chart" className="w-5 h-5" /> Orchard Ledger
+              <Icon name="chart" className="w-5 h-5 text-leaf" /> Orchard Ledger
             </div>
             <dl className="space-y-1.5 text-[13px]">
               {(
